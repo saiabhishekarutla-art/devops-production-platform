@@ -1,24 +1,42 @@
 # DevOps Production Platform Architecture
 
 ```mermaid
-flowchart TD
+flowchart TB
 
-Developer --> GitHub
+subgraph Developer Workflow
+A[Developer]
+B[GitHub Repository]
+C[GitHub Actions CI/CD]
+end
 
-GitHub --> CI_CD["GitHub Actions CI/CD"]
+subgraph Container Pipeline
+D[Docker Image Build]
+E[Container Registry]
+end
 
-CI_CD --> Docker["Docker Image Build"]
+subgraph Infrastructure
+F[Terraform]
+G[AWS Infrastructure]
+H[Kubernetes Cluster]
+end
 
-Docker --> Registry["Container Registry"]
+subgraph Workloads
+I[Application - Nginx]
+J[Monitoring - Prometheus]
+K[Grafana Dashboards]
+end
 
-Registry --> Kubernetes["Kubernetes Cluster"]
+A --> B
+B --> C
+C --> D
+D --> E
 
-Kubernetes --> App["Application (Nginx)"]
+F --> G
+G --> H
 
-Kubernetes --> Prometheus["Prometheus Monitoring"]
+E --> H
 
-Prometheus --> Grafana["Grafana Dashboards"]
-
-Terraform --> AWS["AWS Infrastructure"]
-
-AWS --> Kubernetes
+H --> I
+H --> J
+J --> K
+```
